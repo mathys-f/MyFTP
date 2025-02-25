@@ -1,0 +1,18 @@
+# Compilation
+myftp
+*.out
+*.a
+*.o
+*.d
+
+# Unit tests
+unit_tests
+*.gcda
+*.gcno
+*.gcov
+
+# Others
+.vscode/
+obj/
+vgcore*
+*.log
