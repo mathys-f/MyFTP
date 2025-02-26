@@ -40,7 +40,7 @@ static void loop(int server_fd, char *path)
 
 int run_server(int port, char *path)
 {
-    int server_fd = 0;
+    int server_fd = port;
     struct pollfd *fds = create_poll(server_fd);
 
     loop(server_fd, path);
