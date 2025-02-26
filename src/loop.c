@@ -26,13 +26,24 @@ static struct pollfd *create_poll(int server_fd)
     return fds;
 }
 
+static void destroy_poll(struct pollfd *fds)
+{
+    free(fds);
+}
+
+static void loop(int server_fd, char *path)
+{
+    (void)server_fd;
+    (void)path;
+    while (1);
+}
+
 int run_server(int port, char *path)
 {
-    int server_fd = create_server(port);
+    int server_fd = 0;
     struct pollfd *fds = create_poll(server_fd);
 
     loop(server_fd, path);
     destroy_poll(fds);
-    destroy_server(server_fd);
     return 0;
 }
