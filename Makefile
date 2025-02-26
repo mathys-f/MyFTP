@@ -9,7 +9,7 @@
 
 NAME = myftp
 
-SRC	=
+SRC	= src/loop.c
 
 TEST_FILES = tests/tests_myftp.c
 
@@ -17,7 +17,7 @@ OBJ	= $(SRC:.c=.o)
 
 CC = gcc -g
 
-CFLAGS = -std=gnu17 -Wall -Wextra -Werror
+CFLAGS = -std=gnu17 -Wall -Wextra -Werror -I ./include
 
 all: $(NAME)
 
