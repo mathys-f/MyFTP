@@ -47,3 +47,9 @@ int create_server(int port)
     init_queue(server_fd);
     return server_fd;
 }
+
+void destroy_server(int server_fd)
+{
+    if (close(server_fd) == -1)
+        exit(84);
+}

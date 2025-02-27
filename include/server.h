@@ -9,5 +9,6 @@
     #define SERVER_H
 
 int create_server(int port);
+void destroy_server(int server_fd);
 
 #endif /* !SERVER_H */
