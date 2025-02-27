@@ -9,7 +9,8 @@
 
 NAME = myftp
 
-SRC	= src/loop.c
+SRC	= 	src/loop.c	\
+		src/server.c	\
 
 TEST_FILES = tests/tests_myftp.c
 
