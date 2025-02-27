@@ -12,6 +12,12 @@
 
 #include "server.h"
 
+static void init_queue(int server_fd)
+{
+    if (listen(server_fd, 10) == -1)
+        exit(84);
+}
+
 static void config_socket(int server_fd, int port)
 {
     struct sockaddr_in server_addr;
