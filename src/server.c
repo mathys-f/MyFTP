@@ -12,6 +12,18 @@
 
 #include "server.h"
 
+static void config_socket(int server_fd, int port)
+{
+    struct sockaddr_in server_addr;
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(port);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    if (bind(server_fd, (struct sockaddr *)&server_addr,
+        sizeof(server_addr)) == -1)
+        exit(84);
+}
+
 static int create_socket(void)
 {
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
