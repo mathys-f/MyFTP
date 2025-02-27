@@ -12,6 +12,15 @@
 
 #include "server.h"
 
+static int create_socket(void)
+{
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (server_fd == -1)
+        exit(84);
+    return server_fd;
+}
+
 int create_server(int port)
 {
     int server_fd = create_socket();
