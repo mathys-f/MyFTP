@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "loop.h"
+#include "server.h"
 
 static struct pollfd *create_poll(int server_fd)
 {
@@ -40,10 +41,11 @@ static void loop(int server_fd, char *path)
 
 int run_server(int port, char *path)
 {
-    int server_fd = port;
+    int server_fd = create_server(port);
     struct pollfd *fds = create_poll(server_fd);
 
     loop(server_fd, path);
     destroy_poll(fds);
+    destroy_server(server_fd);
     return 0;
 }
