@@ -14,6 +14,7 @@ SRC	= 	src/loop.c		\
 		src/client.c	\
 		src/command.c	\
 		src/commands/quit.c	\
+		src/commands/user.c	\
 		src/my_str_to_word_array.c	\
 
 TEST_FILES = tests/tests_myftp.c
