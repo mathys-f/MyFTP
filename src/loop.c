@@ -8,44 +8,65 @@
 #include <poll.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/socket.h>
 
+#include "client.h"
 #include "loop.h"
 #include "server.h"
+#include "command.h"
 
-static struct pollfd *create_poll(int server_fd)
+static void check_for_new_client(my_ftp_t *my_ftp)
 {
-    struct pollfd *fds = malloc(sizeof(struct pollfd) * 11);
+    int new_fd = 0;
 
-    if (fds == NULL)
-        exit(84);
-    fds[0].fd = server_fd;
-    fds[0].events = POLLIN;
-    for (int i = 1; i < 11; i++) {
-        fds[i].fd = -1;
-        fds[i].events = POLLIN;
+    if (my_ftp->fds[0].revents & POLLIN) {
+        new_fd = accept(my_ftp->fds[0].fd, NULL, NULL);
+        if (new_fd == -1)
+            exit(84);
+        add_client(my_ftp, new_fd);
+        my_ftp->nb_fds++;
+        write(new_fd, "220 Service ready for new user.\r\n", 34);
     }
-    return fds;
 }
 
-static void destroy_poll(struct pollfd *fds)
+static void check_for_client_command(my_ftp_t *my_ftp)
 {
-    free(fds);
+    for (int i = 1; i < my_ftp->nb_fds; i++) {
+        if (my_ftp->fds[i].revents & POLLIN)
+            handle_client_command(my_ftp, my_ftp->fds[i].fd);
+    }
 }
 
-static void loop(int server_fd, char *path)
+static void loop(my_ftp_t *my_ftp)
 {
-    (void)server_fd;
-    (void)path;
-    while (1);
+    int ready = 0;
+
+    while (1) {
+        ready = poll(my_ftp->fds, my_ftp->nb_fds, -1);
+        if (ready == -1)
+            exit(84);
+        check_for_new_client(my_ftp);
+        check_for_client_command(my_ftp);
+    }
 }
 
-int run_server(int port, char *path)
+int run_server(int port, char *path, my_ftp_t *my_ftp)
 {
-    int server_fd = create_server(port);
-    struct pollfd *fds = create_poll(server_fd);
-
-    loop(server_fd, path);
-    destroy_poll(fds);
-    destroy_server(server_fd);
+    my_ftp->port = port;
+    my_ftp->path = path;
+    my_ftp->server_fd = create_server(port);
+    my_ftp->fds = create_poll(my_ftp->server_fd);
+    my_ftp->nb_fds = 1;
+    my_ftp->clients = NULL;
+    loop(my_ftp);
+    down_server(my_ftp);
     return 0;
+}
+
+void down_server(my_ftp_t *my_ftp)
+{
+    destroy_poll(my_ftp->fds);
+    destroy_server(my_ftp->server_fd);
+    destroy_clients(my_ftp->clients);
 }

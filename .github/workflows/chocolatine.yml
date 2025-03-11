@@ -13,10 +13,37 @@ env:
   EXECUTABLES: "myftp"
 
 jobs:
-  check_coding_style:
-    name: check_coding_style
+  # check_coding_style:
+  #   name: check_coding_style
+  #   runs-on: ubuntu-latest
+  #   container: ghcr.io/epitech/coding-style-checker:latest
+  #   steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v4.1.1
+      # - name: Launch check
+      #   run: |
+      #     check.sh $(pwd) $(pwd)
+      #     nb_errors=`wc -l < coding-style-reports.log`
+      #     i=1
+      #     while [ $nb_errors -ge $i ]
+      #     do
+      #       severity=`cut -d ":" -f 3 coding-style-reports.log | head -n $i | tail -n 1`
+      #       file=`cut -d ":" -f 1 coding-style-reports.log | head -n $i | tail -n 1 | sed 's/^\.\///'`
+      #       line=`cut -d ":" -f 2 coding-style-reports.log | head -n $i | tail -n 1`
+      #       rule=`cut -d ":" -f 4 coding-style-reports.log | head -n $i | tail -n 1`
+      #       echo "::error title=$severity coding style error,file=$file,line=$line::$rule"
+      #       ((i++))
+      #     done
+      #     if [ $nb_errors -gt 1 ]
+      #     then
+      #       exit 1
+      #     fi
+
+  check_program_compilation:
+    name: check_program_compilation
     runs-on: ubuntu-latest
-    container: ghcr.io/epitech/coding-style-checker:latest
+    container:
+      image: epitechcontent/epitest-docker:latest
     steps:
       - name: Check repository
         run: |
@@ -25,34 +52,6 @@ jobs:
           echo "${{ github.event.repository.ssh_url }} : The current and the mirror repository are the same."
             exit 1
           fi
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-      - name: Launch check
-        run: |
-          check.sh $(pwd) $(pwd)
-          nb_errors=`wc -l < coding-style-reports.log`
-          i=1
-          while [ $nb_errors -ge $i ]
-          do
-            severity=`cut -d ":" -f 3 coding-style-reports.log | head -n $i | tail -n 1`
-            file=`cut -d ":" -f 1 coding-style-reports.log | head -n $i | tail -n 1 | sed 's/^\.\///'`
-            line=`cut -d ":" -f 2 coding-style-reports.log | head -n $i | tail -n 1`
-            rule=`cut -d ":" -f 4 coding-style-reports.log | head -n $i | tail -n 1`
-            echo "::error title=$severity coding style error,file=$file,line=$line::$rule"
-            ((i++))
-          done
-          if [ $nb_errors -gt 0 ]
-          then
-            exit 1
-          fi
-
-  check_program_compilation:
-    name: check_program_compilation
-    needs: check_coding_style
-    runs-on: ubuntu-latest
-    container:
-      image: epitechcontent/epitest-docker:latest
-    steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Run make
