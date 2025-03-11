@@ -8,6 +8,7 @@
 #include <poll.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/socket.h>
 
 #include "loop.h"
@@ -23,6 +24,7 @@ static void check_for_new_client(my_ftp_t *my_ftp)
         if (new_fd == -1)
             exit(84);
         add_client(my_ftp, new_fd);
+        write(new_fd, "220 Service ready for new user.\r\n", 34);
     }
 }
 
