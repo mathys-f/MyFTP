@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 #include "client.h"
-#include "loop.h"
 
 void add_client(my_ftp_t *my_ftp, int fd)
 {
@@ -20,7 +19,18 @@ void add_client(my_ftp_t *my_ftp, int fd)
         exit(84);
     my_ftp->fds[my_ftp->nb_fds].fd = fd;
     my_ftp->fds[my_ftp->nb_fds].events = POLLIN;
-    my_ftp->nb_fds++;
+    my_ftp->clients = realloc(my_ftp->clients, sizeof(client_t *) *
+        (my_ftp->nb_fds));
+    if (my_ftp->clients == NULL)
+        exit(84);
+    my_ftp->clients[my_ftp->nb_fds - 1] = malloc(sizeof(client_t));
+    if (my_ftp->clients[my_ftp->nb_fds - 1] == NULL)
+        exit(84);
+    my_ftp->clients[my_ftp->nb_fds - 1]->fd = fd;
+    my_ftp->clients[my_ftp->nb_fds - 1]->is_logged = false;
+    my_ftp->clients[my_ftp->nb_fds - 1]->username = NULL;
+    my_ftp->clients[my_ftp->nb_fds - 1]->password = NULL;
+    my_ftp->clients[my_ftp->nb_fds - 1]->path = NULL;
 }
 
 struct pollfd *create_poll(int server_fd)
