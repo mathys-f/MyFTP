@@ -11,6 +11,7 @@ NAME = myftp
 
 SRC	= 	src/loop.c	\
 		src/server.c	\
+		src/client.c	\
 
 TEST_FILES = tests/tests_myftp.c
 
