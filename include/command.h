@@ -17,8 +17,9 @@ typedef struct command_s {
 
 void quit(my_ftp_t *my_ftp, client_t *client, char **args);
 void user(my_ftp_t *my_ftp, client_t *client, char **args);
+void pass(my_ftp_t *my_ftp, client_t *client, char **args);
 
-void handle_client_command(client_t *client);
+void handle_client_command(my_ftp_t *my_ftp, int fd);
 char **my_str_to_word_array(char *str, char *delimiters);
 
 #endif /* !COMMAND_H */
