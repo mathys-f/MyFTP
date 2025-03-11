@@ -11,9 +11,10 @@
 #include <unistd.h>
 #include <sys/socket.h>
 
+#include "client.h"
 #include "loop.h"
 #include "server.h"
-#include "client.h"
+#include "command.h"
 
 static void check_for_new_client(my_ftp_t *my_ftp)
 {
@@ -24,7 +25,16 @@ static void check_for_new_client(my_ftp_t *my_ftp)
         if (new_fd == -1)
             exit(84);
         add_client(my_ftp, new_fd);
+        my_ftp->nb_fds++;
         write(new_fd, "220 Service ready for new user.\r\n", 34);
+    }
+}
+
+static void check_for_client_command(my_ftp_t *my_ftp)
+{
+    for (int i = 1; i < my_ftp->nb_fds; i++) {
+        if (my_ftp->fds[i].revents & POLLIN)
+            handle_client_command(my_ftp->clients[i - 1]);
     }
 }
 
@@ -48,6 +58,7 @@ int run_server(int port, char *path, my_ftp_t *my_ftp)
     my_ftp->server_fd = create_server(port);
     my_ftp->fds = create_poll(my_ftp->server_fd);
     my_ftp->nb_fds = 1;
+    my_ftp->clients = NULL;
     loop(my_ftp);
     down_server(my_ftp);
     return 0;
