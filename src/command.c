@@ -14,6 +14,7 @@
 
 static const command_t commands[] = {
     {"QUIT", &quit},
+    {"USER", &user},
     {NULL, NULL}
 };
 
