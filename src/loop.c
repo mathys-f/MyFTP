@@ -14,7 +14,15 @@
 
 static void loop(my_ftp_t *my_ftp)
 {
-    while (1);
+    int ready = 0;
+
+    while (1) {
+        ready = poll(my_ftp->fds, my_ftp->nb_fds, -1);
+        if (ready == -1)
+            exit(84);
+        check_for_new_client(my_ftp);
+        check_for_client_command(my_ftp);
+    }
 }
 
 int run_server(int port, char *path)
