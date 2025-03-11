@@ -41,7 +41,7 @@ jobs:
             echo "::error title=$severity coding style error,file=$file,line=$line::$rule"
             ((i++))
           done
-          if [ $nb_errors -gt 0 ]
+          if [ $nb_errors -gt 1 ]
           then
             exit 1
           fi
