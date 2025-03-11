@@ -8,9 +8,23 @@
 #include <poll.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <sys/socket.h>
 
 #include "loop.h"
 #include "server.h"
+#include "client.h"
+
+static void check_for_new_client(my_ftp_t *my_ftp)
+{
+    int new_fd = 0;
+
+    if (my_ftp->fds[0].revents & POLLIN) {
+        new_fd = accept(my_ftp->fds[0].fd, NULL, NULL);
+        if (new_fd == -1)
+            exit(84);
+        add_client(my_ftp, new_fd);
+    }
+}
 
 static void loop(my_ftp_t *my_ftp)
 {
