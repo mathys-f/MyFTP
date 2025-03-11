@@ -12,5 +12,6 @@
     #include "loop.h"
 
 struct pollfd *create_poll(int server_fd);
+void destroy_poll(struct pollfd *fds);
 
 #endif /* !CLIENT_H */
