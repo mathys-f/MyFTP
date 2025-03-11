@@ -19,7 +19,8 @@ void user(my_ftp_t *my_ftp, client_t *client, char **args)
         return;
     }
     if (args[1] == NULL) {
-        write(client->fd, "501 Syntax error in parameters or arguments.\r\n", 47);
+        write(client->fd, "501 Syntax error in parameters or arguments.\r\n",
+            47);
         return;
     }
     client->username = strdup(args[1]);

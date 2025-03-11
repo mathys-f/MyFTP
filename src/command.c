@@ -35,7 +35,8 @@ static char *get_client_command(int fd)
         if (readed == 0)
             break;
         size += readed;
-        if (size >= 2 && command[size - 2] == '\r' && command[size - 1] == '\n') {
+        if (size >= 2 && command[size - 2] == '\r' &&
+            command[size - 1] == '\n') {
             command[size - 2] = '\0';
             break;
         }
