@@ -15,13 +15,13 @@ void user(my_ftp_t *my_ftp, client_t *client, char **args)
 {
     (void)my_ftp;
     if (client->is_logged == true) {
-        write(client->fd, "530 Already logged in.\r\n", 24);
+        write(client->fd, "530 Already logged in.\r\n", 25);
         return;
     }
     if (args[1] == NULL) {
-        write(client->fd, "501 Syntax error in parameters or arguments.\r\n", 45);
+        write(client->fd, "501 Syntax error in parameters or arguments.\r\n", 47);
         return;
     }
     client->username = strdup(args[1]);
-    write(client->fd, "331 User name okay, need password.\r\n", 34);
+    write(client->fd, "331 User name okay, need password.\r\n", 37);
 }
