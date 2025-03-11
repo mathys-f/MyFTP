@@ -8,7 +8,7 @@
 #ifndef LOOP_H
     #define LOOP_H
 
-    typedef struct client_s client_t;
+typedef struct client_s client_t;
 
 typedef struct my_ftp_s {
     int port;

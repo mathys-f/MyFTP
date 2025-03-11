@@ -8,8 +8,14 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "command.h"
+
+static const command_t commands[] = {
+    {"QUIT", &quit},
+    {NULL, NULL}
+};
 
 static char *get_client_command(client_t *client)
 {
@@ -28,4 +34,17 @@ void handle_client_command(client_t *client)
 {
     char *command = get_client_command(client);
     char **args = my_str_to_word_array(command, " \t\n");
+
+    if (args == NULL)
+        return;
+    for (int i = 0; commands[i].name; i++) {
+        if (strcmp(commands[i].name, args[0]) == 0) {
+            commands[i].func(NULL, client, args);
+            break;
+        }
+    }
+    free(command);
+    for (int i = 0; args[i]; i++)
+        free(args[i]);
+    free(args);
 }
