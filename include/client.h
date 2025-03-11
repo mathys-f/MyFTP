@@ -19,10 +19,12 @@ typedef struct client_s {
     char *username;
     char *password;
     char *path;
+    struct client_s *next;
 } client_t;
 
 void add_client(my_ftp_t *my_ftp, int fd);
-void remove_client(my_ftp_t *my_ftp, int index);
+void remove_client(my_ftp_t *my_ftp, int fd);
+void destroy_clients(client_t *clients);
 struct pollfd *create_poll(int server_fd);
 void destroy_poll(struct pollfd *fds);
 
