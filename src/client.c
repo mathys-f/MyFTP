@@ -22,3 +22,8 @@ struct pollfd *create_poll(int server_fd)
     fds[0].events = POLLIN;
     return fds;
 }
+
+void destroy_poll(struct pollfd *fds)
+{
+    free(fds);
+}
