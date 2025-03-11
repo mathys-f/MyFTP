@@ -16,7 +16,7 @@ typedef struct my_ftp_s {
     int server_fd;
     struct pollfd *fds;
     int nb_fds;
-    client_t **clients;
+    client_t *clients;
 } my_ftp_t;
 
 int run_server(int port, char *path, my_ftp_t *my_ftp);

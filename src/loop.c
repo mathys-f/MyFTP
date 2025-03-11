@@ -34,7 +34,7 @@ static void check_for_client_command(my_ftp_t *my_ftp)
 {
     for (int i = 1; i < my_ftp->nb_fds; i++) {
         if (my_ftp->fds[i].revents & POLLIN)
-            handle_client_command(my_ftp->clients[i - 1]);
+            handle_client_command(my_ftp, my_ftp->fds[i].fd);
     }
 }
 
@@ -68,4 +68,5 @@ void down_server(my_ftp_t *my_ftp)
 {
     destroy_poll(my_ftp->fds);
     destroy_server(my_ftp->server_fd);
+    destroy_clients(my_ftp->clients);
 }
