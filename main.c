@@ -9,8 +9,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <signal.h>
 
 #include "include/loop.h"
+
+static my_ftp_t my_ftp = {0};
 
 static int display_help(void)
 {
@@ -18,6 +21,23 @@ static int display_help(void)
         "\tport is the port number on which the server socket listens\n"
         "\tpath is the path to the home directory for the Anonymous user\n");
     return 0;
+}
+
+void handle_down_server(int sig)
+{
+    (void)sig;
+    down_server(&my_ftp);
+    exit(0);
+}
+
+static void setup_down_server(void)
+{
+    struct sigaction sig = {0};
+
+    sig.sa_handler = &handle_down_server;
+    sigaction(SIGINT, &sig, NULL);
+    sigaction(SIGQUIT, &sig, NULL);
+    sigaction(SIGTERM, &sig, NULL);
 }
 
 static int parsing(char *port, char *path)
@@ -34,7 +54,8 @@ static int parsing(char *port, char *path)
         return 84;
     }
     closedir(dir);
-    return run_server(port_nb, path);
+    setup_down_server();
+    return run_server(port_nb, path, &my_ftp);
 }
 
 int main(int ac, char **av)
