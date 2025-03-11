@@ -11,5 +11,6 @@
     #include "client.h"
 
 void handle_client_command(client_t *client);
+char **my_str_to_word_array(char *str, char *delimiters);
 
 #endif /* !COMMAND_H */
