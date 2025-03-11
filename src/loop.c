@@ -32,3 +32,10 @@ int run_server(int port, char *path)
     down_server(my_ftp);
     return 0;
 }
+
+void down_server(my_ftp_t *my_ftp)
+{
+    destroy_poll(my_ftp->fds);
+    destroy_server(my_ftp->server_fd);
+    free(my_ftp);
+}
