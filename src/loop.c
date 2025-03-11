@@ -39,12 +39,8 @@ static void loop(my_ftp_t *my_ftp)
     }
 }
 
-int run_server(int port, char *path)
+int run_server(int port, char *path, my_ftp_t *my_ftp)
 {
-    my_ftp_t *my_ftp = malloc(sizeof(my_ftp_t));
-
-    if (my_ftp == NULL)
-        exit(84);
     my_ftp->port = port;
     my_ftp->path = path;
     my_ftp->server_fd = create_server(port);
@@ -59,5 +55,4 @@ void down_server(my_ftp_t *my_ftp)
 {
     destroy_poll(my_ftp->fds);
     destroy_server(my_ftp->server_fd);
-    free(my_ftp);
 }
