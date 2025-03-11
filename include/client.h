@@ -22,6 +22,7 @@ typedef struct client_s {
 } client_t;
 
 void add_client(my_ftp_t *my_ftp, int fd);
+void remove_client(my_ftp_t *my_ftp, int index);
 struct pollfd *create_poll(int server_fd);
 void destroy_poll(struct pollfd *fds);
 
