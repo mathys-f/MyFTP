@@ -33,6 +33,17 @@ void add_client(my_ftp_t *my_ftp, int fd)
     my_ftp->clients[my_ftp->nb_fds - 1]->path = NULL;
 }
 
+void remove_client(my_ftp_t *my_ftp, int index)
+{
+    close(my_ftp->clients[index]->fd);
+    free(my_ftp->clients[index]);
+    for (int i = index; i < my_ftp->nb_fds - 1; i++) {
+        my_ftp->clients[i] = my_ftp->clients[i + 1];
+        my_ftp->fds[i + 1] = my_ftp->fds[i + 2];
+    }
+    my_ftp->nb_fds--;
+}
+
 struct pollfd *create_poll(int server_fd)
 {
     struct pollfd *fds = malloc(sizeof(struct pollfd));
