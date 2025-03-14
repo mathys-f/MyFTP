@@ -22,11 +22,14 @@ void pass(my_ftp_t *my_ftp, client_t *client, char **args)
         write(client->fd, "503 Bad sequence of commands.\r\n", 32);
         return;
     }
-    if (args[1] == NULL)
+    if (args[1] == NULL && strcmp(client->username, "Anonymous") == 0) {
+        client->is_logged = true;
         client->password = strdup("");
-    else
-        client->password = strdup(args[1]);
-    client->path = strdup(my_ftp->path);
-    client->is_logged = true;
-    write(client->fd, "230 User logged in, proceed.\r\n", 31);
+        client->path = strdup(my_ftp->path);
+        write(client->fd, "230 User logged in, proceed.\r\n", 31);
+        return;
+    }
+    free(client->username);
+    client->username = NULL;
+    write(client->fd, "530 Login incorrect.\r\n", 22);
 }
