@@ -18,6 +18,7 @@ SRC	= 	src/loop.c		\
 		src/commands/pass.c	\
 		src/commands/help.c	\
 		src/commands/noop.c	\
+		src/commands/pwd.c	\
 		src/my_str_to_word_array.c	\
 
 TEST_FILES = tests/tests_myftp.c

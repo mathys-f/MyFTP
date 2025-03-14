@@ -26,6 +26,7 @@ void pass(my_ftp_t *my_ftp, client_t *client, char **args);
 void quit(my_ftp_t *my_ftp, client_t *client, char **args);
 void help(my_ftp_t *my_ftp, client_t *client, char **args);
 void noop(my_ftp_t *my_ftp, client_t *client, char **args);
+void pwd(my_ftp_t *my_ftp, client_t *client, char **args);
 
 void handle_client_command(my_ftp_t *my_ftp, int fd);
 char **my_str_to_word_array(char *str, char *delimiters);

@@ -18,6 +18,7 @@ static const command_t commands[] = {
     {"QUIT", &quit},
     {"HELP", &help},
     {"NOOP", &noop},
+    {"PWD", &pwd},
     {NULL, NULL}
 };
 

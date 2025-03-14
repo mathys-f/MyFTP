@@ -26,7 +26,7 @@ static void check_for_new_client(my_ftp_t *my_ftp)
             exit(84);
         add_client(my_ftp, new_fd);
         my_ftp->nb_fds++;
-        write(new_fd, "220 Service ready for new user.\r\n", 34);
+        write(new_fd, "220 Service ready for new user.\r\n", 33);
     }
 }
 
