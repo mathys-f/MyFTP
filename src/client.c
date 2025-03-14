@@ -23,6 +23,7 @@ static void add_client_data(my_ftp_t *my_ftp, int fd)
     client->username = NULL;
     client->password = NULL;
     client->path = NULL;
+    client->buffer = NULL;
     client->next = my_ftp->clients;
     my_ftp->clients = client;
 }
@@ -57,6 +58,7 @@ static void remove_client_data(client_t **client, int fd)
     free(current->username);
     free(current->password);
     free(current->path);
+    free(current->buffer);
     free(current);
 }
 
@@ -90,6 +92,7 @@ void destroy_clients(client_t *clients)
         free(current->username);
         free(current->password);
         free(current->path);
+        free(current->buffer);
         free(current);
         current = next;
     }

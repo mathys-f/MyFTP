@@ -19,6 +19,7 @@ typedef struct client_s {
     char *username;
     char *password;
     char *path;
+    char *buffer;
     struct client_s *next;
 } client_t;
 
