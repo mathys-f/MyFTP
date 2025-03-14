@@ -17,6 +17,7 @@ static const command_help_t commands_help[] = {
     {"PASS", "PASS <SP> <password> <CRLF> : Specify password for authentication\n", 67},
     {"QUIT", "QUIT <CRLF> : Disconnection\n", 29},
     {"HELP", "HELP [<SP> <string>] <CRLF> : List available commands\n", 55},
+    {"NOOP", "NOOP <CRLF> : Do nothing\n", 27},
     {NULL, NULL, 0}
 };
 

@@ -17,6 +17,7 @@ static const command_t commands[] = {
     {"PASS", &pass},
     {"QUIT", &quit},
     {"HELP", &help},
+    {"NOOP", &noop},
     {NULL, NULL}
 };
 
@@ -59,8 +60,10 @@ static void get_args(my_ftp_t *my_ftp, client_t *current, char *command)
 {
     char **args = my_str_to_word_array(command, " \t");
 
-    if (args[0] == NULL)
+    if (args[0] == NULL) {
+        free(args);
         return;
+    }
     for (int i = 0; commands[i].name != NULL; i++) {
         if (strcmp(commands[i].name, args[0]) == 0) {
             commands[i].func(my_ftp, current, args);
