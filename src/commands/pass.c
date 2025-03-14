@@ -7,6 +7,7 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "loop.h"
 #include "client.h"
