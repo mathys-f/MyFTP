@@ -25,7 +25,7 @@ static const command_help_t commands_help[] = {
 void help(my_ftp_t *my_ftp, client_t *client, char **args)
 {
     (void)my_ftp;
-    write(client->fd, "214 Help message.\n", 18);
+    write(client->fd, "214 Help message.\n\r", 19);
     if (args[1] == NULL) {
         for (int i = 0; commands_help[i].name != NULL; i++)
             write(client->fd, commands_help[i].desc, commands_help[i].len);
