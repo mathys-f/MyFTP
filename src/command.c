@@ -19,6 +19,7 @@ static const command_t commands[] = {
     {"HELP", &help},
     {"NOOP", &noop},
     {"PWD", &pwd},
+    {"CWD", &cwd},
     {NULL, NULL}
 };
 
@@ -60,6 +61,7 @@ static bool get_client_buffer(my_ftp_t *my_ftp, client_t *client, int fd)
 static void get_args(my_ftp_t *my_ftp, client_t *current, char *command)
 {
     char **args = my_str_to_word_array(command, " \t");
+    bool is_command = false;
 
     if (args[0] == NULL) {
         free(args);
@@ -68,9 +70,12 @@ static void get_args(my_ftp_t *my_ftp, client_t *current, char *command)
     for (int i = 0; commands[i].name != NULL; i++) {
         if (strcmp(commands[i].name, args[0]) == 0) {
             commands[i].func(my_ftp, current, args);
+            is_command = true;
             break;
         }
     }
+    if (is_command == false)
+        write(current->fd, "500 Unknown command.\r\n", 22);
     for (int i = 0; args[i] != NULL; i++)
         free(args[i]);
     free(args);

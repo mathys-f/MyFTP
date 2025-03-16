@@ -13,12 +13,15 @@
 #include "command.h"
 
 static const command_help_t commands_help[] = {
-    {"USER", "USER <SP> <username> <CRLF> : Specify user for authentication\n", 63},
-    {"PASS", "PASS <SP> <password> <CRLF> : Specify password for authentication\n", 67},
+    {"USER", "USER <SP> <username> <CRLF> : "
+        "Specify user for authentication\n", 63},
+    {"PASS", "PASS <SP> <password> <CRLF> : "
+        "Specify password for authentication\n", 67},
     {"QUIT", "QUIT <CRLF> : Disconnection\n", 29},
     {"HELP", "HELP [<SP> <string>] <CRLF> : List available commands\n", 55},
     {"NOOP", "NOOP <CRLF> : Do nothing\n", 28},
     {"PWD", "PWD <CRLF> : Print working directory\n", 38},
+    {"CWD", "CWD <SP> <directory> <CRLF> : Change working directory\n", 56},
     {NULL, NULL, 0}
 };
 
