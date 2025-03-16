@@ -6,8 +6,11 @@
 */
 
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "loop.h"
+#include "server.h"
 #include "client.h"
 
 void port(my_ftp_t *my_ftp, client_t *client, char **args)
