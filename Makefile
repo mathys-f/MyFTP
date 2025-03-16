@@ -21,6 +21,7 @@ SRC	= 	src/loop.c		\
 		src/commands/pwd.c	\
 		src/commands/cwd.c	\
 		src/commands/cdup.c	\
+		src/commands/dele.c	\
 		src/my_str_to_word_array.c	\
 
 TEST_FILES = tests/tests_myftp.c

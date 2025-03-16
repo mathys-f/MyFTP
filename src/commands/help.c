@@ -23,6 +23,7 @@ static const command_help_t commands_help[] = {
     {"PWD", "PWD <CRLF> : Print working directory\n", 38},
     {"CWD", "CWD <SP> <directory> <CRLF> : Change working directory\n", 56},
     {"CDUP", "CDUP <CRLF> : Change to parent directory\n", 43},
+    {"DELE", "DELE <SP> <file> <CRLF> : Delete file\n", 42},
     {NULL, NULL, 0}
 };
 

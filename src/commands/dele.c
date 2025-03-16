@@ -1,14 +1,15 @@
 /*
 ** EPITECH PROJECT, 2025
-** cwd.c
+** dele.c
 ** File description:
-** cwd.c
+** dele.c
 */
 
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <dirent.h>
+#include <stdio.h>
+#include <sys/stat.h>
 
 #include "loop.h"
 #include "client.h"
@@ -32,31 +33,32 @@ static char *get_path(char *current_directory, char *path)
     return new_path;
 }
 
-static bool check_directory(char *path)
+static bool check_file(char *path)
 {
-    DIR *dir = opendir(path);
+    struct stat sb;
 
-    if (dir == NULL)
+    if (stat(path, &sb) == -1)
         return false;
-    closedir(dir);
+    if (S_ISREG(sb.st_mode) == false)
+        return false;
     return true;
 }
 
-static void check_path(client_t *client, char *path)
+static void delete_file(client_t *client, char *path)
 {
     char *real_path = realpath(path, NULL);
 
-    if (real_path == NULL) {
+    if (real_path == NULL || check_file(real_path) == false ||
+        remove(real_path) == -1) {
+        write(client->fd, "550 Failed to delete file.\r\n", 28);
         free(path);
         return;
     }
     free(path);
-    free(client->path);
-    client->path = real_path;
     write(client->fd, "250 Requested file action okay, completed.\r\n", 44);
 }
 
-void cwd(my_ftp_t *my_ftp, client_t *client, char **args)
+void dele(my_ftp_t *my_ftp, client_t *client, char **args)
 {
     char *path = NULL;
 
@@ -66,14 +68,9 @@ void cwd(my_ftp_t *my_ftp, client_t *client, char **args)
         return;
     }
     if (args[1] == NULL) {
-        write(client->fd, "550 Failed to change directory.\r\n", 33);
+        write(client->fd, "550 Failed to delete file.\r\n", 28);
         return;
     }
     path = get_path(client->path, args[1]);
-    if (check_directory(path) == false) {
-        write(client->fd, "550 Failed to change directory.\r\n", 33);
-        free(path);
-        return;
-    }
-    check_path(client, path);
+    delete_file(client, path);
 }

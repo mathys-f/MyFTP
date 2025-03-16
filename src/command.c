@@ -21,6 +21,7 @@ static const command_t commands[] = {
     {"PWD", &pwd},
     {"CWD", &cwd},
     {"CDUP", &cdup},
+    {"DELE", &dele},
     {NULL, NULL}
 };
 
