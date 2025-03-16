@@ -22,6 +22,7 @@ static const command_help_t commands_help[] = {
     {"NOOP", "NOOP <CRLF> : Do nothing\n", 28},
     {"PWD", "PWD <CRLF> : Print working directory\n", 38},
     {"CWD", "CWD <SP> <directory> <CRLF> : Change working directory\n", 56},
+    {"CDUP", "CDUP <CRLF> : Change to parent directory\n", 43},
     {NULL, NULL, 0}
 };
 

@@ -20,6 +20,7 @@ static const command_t commands[] = {
     {"NOOP", &noop},
     {"PWD", &pwd},
     {"CWD", &cwd},
+    {"CDUP", &cdup},
     {NULL, NULL}
 };
 
