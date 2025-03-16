@@ -25,6 +25,7 @@ static const command_help_t commands_help[] = {
     {"CDUP", "CDUP <CRLF> : Change to parent directory\n", 43},
     {"DELE", "DELE <SP> <file> <CRLF> : Delete file\n", 42},
     {"PASV", "PASV <CRLF> : Enable passive mode\n", 35},
+    {"PORT", "PORT <SP> <host-port> <CRLF> : Enable active mode\n", 54},
     {NULL, NULL, 0}
 };
 

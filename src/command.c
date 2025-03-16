@@ -23,6 +23,7 @@ static const command_t commands[] = {
     {"CDUP", &cdup},
     {"DELE", &dele},
     {"PASV", &pasv},
+    {"PORT", &port},
     {NULL, NULL}
 };
 
