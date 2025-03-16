@@ -15,6 +15,7 @@
 
 typedef struct client_s {
     int fd;
+    int data_fd;
     bool is_logged;
     char *username;
     char *password;

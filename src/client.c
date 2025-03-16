@@ -19,6 +19,7 @@ static void add_client_data(my_ftp_t *my_ftp, int fd)
     if (client == NULL)
         exit(84);
     client->fd = fd;
+    client->data_fd = -1;
     client->is_logged = false;
     client->username = NULL;
     client->password = NULL;
@@ -89,6 +90,7 @@ void destroy_clients(client_t *clients)
     while (current != NULL) {
         next = current->next;
         close(current->fd);
+        close(current->data_fd);
         free(current->username);
         free(current->password);
         free(current->path);

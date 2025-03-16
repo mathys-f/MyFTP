@@ -30,6 +30,7 @@ void pwd(my_ftp_t *my_ftp, client_t *client, char **args);
 void cwd(my_ftp_t *my_ftp, client_t *client, char **args);
 void cdup(my_ftp_t *my_ftp, client_t *client, char **args);
 void dele(my_ftp_t *my_ftp, client_t *client, char **args);
+void pasv(my_ftp_t *my_ftp, client_t *client, char **args);
 
 void handle_client_command(my_ftp_t *my_ftp, int fd);
 char **my_str_to_word_array(char *str, char *delimiters);
